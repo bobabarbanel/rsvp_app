@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-// const ObjectId = require("mongodb").ObjectId;
 const uri =
 	"mongodb+srv://rabarbanel:iVCwKfBXLrRxzw4C@mcollections.dor0p.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri, {
