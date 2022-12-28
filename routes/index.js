@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+require("dotenv").config();
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri =
 	`mongodb+srv://rabarbanel:${process.env.MONGO_PASS}@mcollections.dor0p.mongodb.net/?retryWrites=true&w=majority`;
@@ -16,7 +17,10 @@ client.connect(async () => {
 router.get("/", function(req, res, next) {
 	res.render("index");
 });
-router.get("/all", function(req, res, next) {
+router.get("/:id", function(req, res, next) {
+	res.render("indexid", {id: req.params.id});
+});
+router.get("/api/all", function(req, res, next) {
 	collection
 		.find()
 		.sort({ lastName: 1, firstName: 1 })
@@ -26,19 +30,9 @@ router.get("/all", function(req, res, next) {
 		});
 });
 
-router.post("/getRsvp", function(req, res, next) {
-	// console.log(req.params);
-	const fr = new RegExp(req.body.firstName, "i");
-	const lr = new RegExp(req.body.lastName, "i");
-	const query = {
-		firstName: {
-			$regex: fr
-		},
-		lastName: {
-			$regex: lr
-		}
-	};
-	// console.log(query);
+router.get("/api/getRsvp", function(req, res, next) {
+	const _id = new ObjectId(req.query.id);
+	const query = { _id };
 	collection.find(query).toArray().then(cards => {
 		if (cards.length === 1) {
 			res.json(cards[0]);
@@ -48,8 +42,7 @@ router.post("/getRsvp", function(req, res, next) {
 	});
 });
 
-router.post("/updateRsvp", function(req, res, next) {
-	console.log(req.params);
+router.post("/api/updateRsvp", function(req, res, next) {
 	let { _id, response } = req.body;
 	const query = { _id: new ObjectId(_id) };
 	collection.updateOne(query, { $set: { response, date: new Date() } }).then(() => {

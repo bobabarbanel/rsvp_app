@@ -63,3 +63,20 @@ select {
   font-weight: bold;
   display: none;
 }
+#pid {
+  opacity: 0;
+}
+.flexrow {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.flexcol {
+  display:flex;
+  flex-direction: column;
+}
+img.smimg {
+  width: 80%;
+  margin-top: 40px;
+}
