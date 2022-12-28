@@ -14,7 +14,7 @@
 </head>
 
 <body id="body">
-    <h1 id="page_title" class="center">FlyThru / IVT Reunion</h1>
+    <h1 class="center">FlyThru / IVT Reunion</h1>
     <div id="loading">
         <h2>Loading...</h2>
     </div>
@@ -29,11 +29,10 @@
                 <span><input id="update_yes" type="radio" name="response" value="yes">Yes - I will be there!</span>
                 <span><input id="update_no" type="radio" name="response" value="no">No - I cannot make it.</span>
             </div>
-            <img class="smimg" src="/images/ergo.jpg"/>
+            <img class="smimg" src="/images/ergo.jpg" />
         </div>
 
         <div id="update_id" style="opacity:0;"></div>
-        <h2 id="message">Please choose Yes or No.</h2>
     </form>
 
     <h1 id="final"></h1>
@@ -42,8 +41,8 @@
         <a
             href="https://www.google.com/maps/place/Luther+Burbank+Park/@47.5906986,-122.228208,17.29z/data=!4m5!3m4!1s0x54906bbd64a0c10b:0xdc1969ecca221a66!8m2!3d47.5911806!4d-122.2256685">
             <h2>2040 84th Ave SE, Room #104, Mercer Island, WA 98040</h2>
-            <br/>
-            <img src="/images/map.jpg"/>
+            <br />
+            <img src="/images/map.jpg" />
         </a>
     </div>
 
@@ -58,8 +57,6 @@
 
         const body = document.getElementById("body");
         const map = document.getElementById("map");
-        const message = document.getElementById('message');
-        const page_title = document.getElementById('page_title');
         const loading = document.getElementById('loading');
         const pid = document.getElementById('pid');
 
@@ -93,12 +90,6 @@
         getPerson(pid.textContent.trim());
 
 
-        function show_message() {
-            message.style.opacity = 1;
-        }
-        function hide_message() {
-            message.style.opacity = 0;
-        }
 
         async function update_rsvp(e) {
 
@@ -107,31 +98,27 @@
             if (update_yes.checked) rValue = 'yes';
             else if (update_no.checked) rValue = 'no';
 
-            if (rValue) {
-                hide_message();
-                const rawResponse = await fetch('/api/updateRsvp', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ _id, response: rValue, date: new Date() })
-                });
-                const { response } = await rawResponse.json();
-                const final = document.getElementById("final");
-                document.querySelector("form img").style.display = "none";
-                if (response === 'yes') {
-                    update_data.style.display = "none";
 
-                    body.style.backgroundColor = 'lightgreen';
-                    final.textContent = "Fantastic. We'll see you on 25 March 2023."
-                    map.style.display = "flex";
+            const rawResponse = await fetch('/api/updateRsvp', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ _id, response: rValue, date: new Date() })
+            });
+            const { response } = await rawResponse.json();
+            const final = document.getElementById("final");
+            document.querySelector("form img").style.display = "none";
+            if (response === 'yes') {
+                update_data.style.display = "none";
 
-                } else {
-                    final.innerHTML = "<span style='font-size:100px;'>&#128533;</span>&nbsp;  So sorry. You will be missed."
-                }
+                body.style.backgroundColor = 'lightgreen';
+                final.textContent = "Fantastic. We'll see you on 25 March 2023."
+                map.style.display = "flex";
+
             } else {
-                show_message();
+                final.innerHTML = "<span style='font-size:100px;'>&#128533;</span>&nbsp;  So sorry. You will be missed."
             }
         }
     </script>
