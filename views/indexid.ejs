@@ -24,7 +24,7 @@
         <%= id %>
     </pid>
 
-    <div id="update_data" action="">
+    <div id="update_data" style="display: none">
         <span id="update_firstName"></span>, your email is <span id="update_email"></span>.
 
         <div class="flexrow">
@@ -96,9 +96,10 @@
             let rawResponse = await fetch(`/api/getRsvp?id=${id}`);
             let { email, firstName, lastName, response } = await rawResponse.json();
             loading.style.display = "none";
-
             update_email.textContent = email === '?' ? 'not known -- please tell us' : email;
             update_firstName.textContent = firstName;
+            update_data.style.display = "block";
+
             display_response(response);
 
             update_yes.addEventListener('change', update_rsvp);
