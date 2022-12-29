@@ -13,8 +13,10 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 
-<body id="body">
-    <h1 class="center">FlyThru / IVT Reunion</h1>
+<body id="body" class="flexcol">
+
+    <h1>FlyThru / IVT Reunion</h1>
+    <h2>25 March 2023, Noon to 3pm</h2>
     <div id="loading">
         <h2>Loading...</h2>
     </div>
@@ -22,30 +24,40 @@
         <%= id %>
     </pid>
 
-    <form id="update_data" action="">
+    <div id="update_data" action="">
         <span id="update_firstName"></span>, your email is <span id="update_email"></span>.
+
         <div class="flexrow">
-            <div class="flexcol">
+            <p style="font-size: 20px; margin-right: 20px;">R.S.V.P.</p>
+            <div class="flexcol2">
                 <span><input id="update_yes" type="radio" name="response" value="yes">Yes - I will be there!</span>
                 <span><input id="update_no" type="radio" name="response" value="no">No - I cannot make it.</span>
             </div>
-
         </div>
-    </form>
-    <div id="neither" style="display: none">
-        <img class="smimg" src="/images/ergo.jpg" />
     </div>
-
-    <div id="yes">
-        <div id="map">
-            <p>Contributions to help with the facility rental and food, are happily accepted.</p>
-            <a
-                href="https://www.google.com/maps/place/Luther+Burbank+Park/@47.5906986,-122.228208,17.29z/data=!4m5!3m4!1s0x54906bbd64a0c10b:0xdc1969ecca221a66!8m2!3d47.5911806!4d-122.2256685">
-                <h2>2040 84th Ave SE, Room #104, Mercer Island, WA 98040</h2>
-                <br />
-                <img src="/images/map.jpg" />
+    <div id="neither" style="display: none">
+        <div class="flexcol">
+            <a href="https://www.google.com/maps/place/Luther+Burbank+Park/@47.5906986,-122.228208,17.29z/data=!4m5!3m4!1s0x54906bbd64a0c10b:0xdc1969ecca221a66!8m2!3d47.5911806!4d-122.2256685">
+                <div class="flexcol">
+                    <h2>2040 84th Ave SE, Room #104<br />Mercer Island, WA 98040</h2>
+                    <img class="smallmap" src="/images/map.jpg" />
+                </div>
             </a>
         </div>
+    </div>
+
+    <div id="yes" class="flexcol">
+
+        <span style="font-size: 60px; color: red;">&#8252;&nbsp;Fantastic</span>
+        <p>Contributions to help with the facility rental and food, are happily accepted.</p>
+        <a
+            href="https://www.google.com/maps/place/Luther+Burbank+Park/@47.5906986,-122.228208,17.29z/data=!4m5!3m4!1s0x54906bbd64a0c10b:0xdc1969ecca221a66!8m2!3d47.5911806!4d-122.2256685">
+            <div class="flexcol">
+                <h2>2040 84th Ave SE, Room #104<br />Mercer Island, WA 98040</h2>
+                <img src="/images/map.jpg" />
+            </div>
+        </a>
+
     </div>
 
     <div id="no">
@@ -73,17 +85,17 @@
             neither.style.display = "none";
             if (signal === 'yes') {
                 yes.style.display = "flex";
-            } else if (signal === 'no'){
+            } else if (signal === 'no') {
                 no.style.display = "block";
             } else {
-                neither.style.display = "block";
+                neither.style.display = "flex";
             }
         }
 
         async function getPerson(id) {
             let rawResponse = await fetch(`/api/getRsvp?id=${id}`);
             let { email, firstName, lastName, response } = await rawResponse.json();
-            loading.style.display = "none"
+            loading.style.display = "none";
 
             update_email.textContent = email === '?' ? 'not known -- please tell us' : email;
             update_firstName.textContent = firstName;

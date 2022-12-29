@@ -1,7 +1,7 @@
 body {
 	padding: 50px;
 	font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: rgb(198, 185, 163);
+	background-color: rgb(198, 185, 163);
 }
 ul {
 	list-style: none;
@@ -15,49 +15,65 @@ li {
 }
 
 img {
-  width: 70%;
-  margin: auto;
-  display: block;
+	width: 70%;
+	margin: auto;
+	display: block;
 }
 #map {
-  flex-wrap: wrap;
+	flex-wrap: wrap;
 }
 form {
-  padding: 20px;
+	padding: 20px;
 }
 
 .center {
-  text-align: center;
-  margin: 0 auto;
+	text-align: center;
+	margin: 0 auto;
 }
 
 #loading {
-  width: 160px;
-  text-align: center;
-  padding: 10px;
-  background-color:rgb(48, 240, 169);
-  font-size: 16px;
-  font-weight: bold;
-  display: none;
+	width: 160px;
+	text-align: center;
+	padding: 10px;
+	background-color: rgb(48, 240, 169);
+	font-size: 16px;
+	font-weight: bold;
+	display: none;
 }
 #pid {
-  opacity: 0;
+	opacity: 0;
 }
 .flexrow {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	margin: 20px;
 }
 .flexcol {
-  display:flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.flexcol2 {
+	display: flex;
+	flex-direction: column;
+	border: 2px solid blue;
+	padding: 20px;
 }
 img.smimg {
-  width: 80%;
-  margin-top: 40px;
-  max-height: 80%;
+	width: 80%;
+	margin-top: 40px;
+	max-height: 80%;
 }
-#no, #yes, #neither {
-  display: none;
+#no,
+#yes,
+#neither {
+	display: none;
+}
+.smallmap {
+	width: 30%;
+}
+.flexcol span {
+	margin-top: 10px;
 }
