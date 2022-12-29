@@ -22,28 +22,34 @@
         <%= id %>
     </pid>
 
-    <form id="update_data" action="" style="display:none;">
+    <form id="update_data" action="">
         <span id="update_firstName"></span>, your email is <span id="update_email"></span>.
         <div class="flexrow">
             <div class="flexcol">
                 <span><input id="update_yes" type="radio" name="response" value="yes">Yes - I will be there!</span>
                 <span><input id="update_no" type="radio" name="response" value="no">No - I cannot make it.</span>
             </div>
-            <img class="smimg" src="/images/ergo.jpg" />
+
         </div>
-
-        <div id="update_id" style="opacity:0;"></div>
     </form>
+    <div id="neither" style="display: none">
+        <img class="smimg" src="/images/ergo.jpg" />
+    </div>
 
-    <h1 id="final"></h1>
-    <div id="map">
-        <p>Contributions to help with the facility rental and food, are happily accepted.</p>
-        <a
-            href="https://www.google.com/maps/place/Luther+Burbank+Park/@47.5906986,-122.228208,17.29z/data=!4m5!3m4!1s0x54906bbd64a0c10b:0xdc1969ecca221a66!8m2!3d47.5911806!4d-122.2256685">
-            <h2>2040 84th Ave SE, Room #104, Mercer Island, WA 98040</h2>
-            <br />
-            <img src="/images/map.jpg" />
-        </a>
+    <div id="yes">
+        <div id="map">
+            <p>Contributions to help with the facility rental and food, are happily accepted.</p>
+            <a
+                href="https://www.google.com/maps/place/Luther+Burbank+Park/@47.5906986,-122.228208,17.29z/data=!4m5!3m4!1s0x54906bbd64a0c10b:0xdc1969ecca221a66!8m2!3d47.5911806!4d-122.2256685">
+                <h2>2040 84th Ave SE, Room #104, Mercer Island, WA 98040</h2>
+                <br />
+                <img src="/images/map.jpg" />
+            </a>
+        </div>
+    </div>
+
+    <div id="no">
+        <span><span style='font-size:100px;'>&#128533;</span>&nbsp; So sorry. You will be missed."</span>
     </div>
 
     <script>
@@ -53,23 +59,41 @@
         const update_firstName = document.getElementById("update_firstName");
         const update_email = document.getElementById("update_email");
 
-        const update_id = document.getElementById("update_id");
-
         const body = document.getElementById("body");
-        const map = document.getElementById("map");
         const loading = document.getElementById('loading');
         const pid = document.getElementById('pid');
 
+        const no = document.getElementById('no');
+        const yes = document.getElementById('yes');
+        const neither = document.getElementById('neither');
 
+        function show_state(signal) {
+            no.style.display = "none";
+            yes.style.display = "none";
+            neither.style.display = "none";
+            if (signal === 'yes') {
+                yes.style.display = "flex";
+            } else if (signal === 'no'){
+                no.style.display = "block";
+            } else {
+                neither.style.display = "block";
+            }
+        }
 
         async function getPerson(id) {
             let rawResponse = await fetch(`/api/getRsvp?id=${id}`);
             let { email, firstName, lastName, response } = await rawResponse.json();
             loading.style.display = "none"
 
-            update_id.textContent = id;
             update_email.textContent = email === '?' ? 'not known -- please tell us' : email;
             update_firstName.textContent = firstName;
+            display_response(response);
+
+            update_yes.addEventListener('change', update_rsvp);
+            update_no.addEventListener('change', update_rsvp);
+        }
+
+        function display_response(response) {
             switch (response) {
                 case '':
                     break;
@@ -82,22 +106,16 @@
                     update_yes.checked = false;
                     break;
             }
-            update_data.style.display = "block";
-            update_yes.addEventListener('change', update_rsvp);
-            update_no.addEventListener('change', update_rsvp);
+            show_state(response);
         }
-        // console.log(pid.textContent)
         getPerson(pid.textContent.trim());
 
-
-
         async function update_rsvp(e) {
-
-            const _id = update_id.textContent;
+            e.preventDefault();
+            const _id = pid.textContent.trim();
             let rValue = null;
             if (update_yes.checked) rValue = 'yes';
             else if (update_no.checked) rValue = 'no';
-
 
             const rawResponse = await fetch('/api/updateRsvp', {
                 method: 'POST',
@@ -107,19 +125,9 @@
                 },
                 body: JSON.stringify({ _id, response: rValue, date: new Date() })
             });
-            const { response } = await rawResponse.json();
-            const final = document.getElementById("final");
-            document.querySelector("form img").style.display = "none";
-            if (response === 'yes') {
-                update_data.style.display = "none";
+            await rawResponse.json();
+            display_response(rValue);
 
-                body.style.backgroundColor = 'lightgreen';
-                final.textContent = "Fantastic. We'll see you on 25 March 2023."
-                map.style.display = "flex";
-
-            } else {
-                final.innerHTML = "<span style='font-size:100px;'>&#128533;</span>&nbsp;  So sorry. You will be missed."
-            }
         }
     </script>
 </body>
