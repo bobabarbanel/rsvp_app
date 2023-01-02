@@ -38,7 +38,7 @@
         async function getAll() {
             const rawResponse = await fetch('/api/all');
             const content = await rawResponse.json();
-            const rYes, rNo, rMaybe;
+            
             const group = { yes: [], no: [], maybe: [] };
             for (let p of content) {
                 if (email != '?') {
