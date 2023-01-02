@@ -40,13 +40,10 @@
             const content = await rawResponse.json();
 
             const group = { yes: [], no: [], maybe: [] };
-            console.log(content);
+
             for (let p of content) {
-                if (p.email != '?') {
-                    if (p.response === '') {
-                        p.response = 'maybe';
-                    }
-                    group[p.response].push(p)
+                if (p.email !== '?') {
+                    group[p.response === '' ? 'maybe' : p.response].push(p)
                 }
             }
             for(let tag of ['yes', 'no', 'maybe']) {
