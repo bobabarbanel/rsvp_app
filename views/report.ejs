@@ -40,6 +40,7 @@
             const content = await rawResponse.json();
 
             const group = { yes: [], no: [], maybe: [] };
+            console.log(content);
             for (let p of content) {
                 if (p.email != '?') {
                     if (p.response === '') {
