@@ -17,6 +17,9 @@ client.connect(async () => {
 router.get("/", function(req, res, next) {
 	res.render("index");
 });
+router.get("/contribute", function(req, res, next) {
+	res.render("contribute");
+});
 router.get("/:id", function(req, res, next) {
 	res.render("indexid", {id: req.params.id});
 });
