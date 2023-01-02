@@ -50,4 +50,16 @@ router.post("/api/updateRsvp", function(req, res, next) {
 	});
 });
 
+router.post("/api/contribute", function(req, res, next) {
+	let { _id, amount, from } = req.body;
+	const query = { _id: new ObjectId(_id) };
+	collection
+		.updateOne(query, { $set: { contribution: {
+			amount : +amount,
+			from
+		} } })
+		.then(() => {
+			res.json({ response });
+		});
+});
 module.exports = router;
