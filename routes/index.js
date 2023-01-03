@@ -14,9 +14,7 @@ client.connect(async () => {
 	collection = client.db("party").collection("rsvp");
 });
 /* GET home page. */
-router.get("/report", function(req, res, next) {
-	res.render("report");
-});
+
 
 router.get("/:id", function(req, res, next) {
 	res.render("indexid", {id: req.params.id});
