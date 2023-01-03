@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reunion Report</title>
+    <style>
+        body {
+            margin: 5em;
+        }
+
+        p {
+            margin-top: 4em;
+            font-weight: bold;
+            background-color: lightblue;
+            width: 15em;
+        }
+
+        ul {
+            background-color: tan;
+            width: 12em;
+        }
+    </style>
+</head>
+
+<body>
+    <container>
+        <p>
+            <%= group.yes.count %> YES
+        </p>
+        <ul>
+            <% for(var i=0; i<group.yes.names.length; i++) { %>
+                <li>
+                    <%= group.yes.names[i] %>
+                </li>
+                <% } %>
+        </ul>
+        <p>
+            <%= group.no.count %> NO
+        </p>
+        <ul>
+            <% for(var i=0; i<group.no.names.length; i++) { %>
+                <li>
+                    <%= group.no.names[i] %>
+                </li>
+                <% } %>
+        </ul>
+        <p>
+            <%= group.maybe.count %> MAYBE
+        </p>
+        <ul>
+            <% for(var i=0; i<group.maybe.names.length; i++) { %>
+                <li>
+                    <%= group.maybe.names[i] %>
+                </li>
+                <% } %>
+        </ul>
+    </container>
+</body>
+
+</html>
