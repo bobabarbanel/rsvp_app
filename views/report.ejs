@@ -30,9 +30,6 @@
         </tr>
     </table>
     <script>
-        const yes = document.getElementById('yes');
-        const no = document.getElementById('no');
-        const maybe = document.getElementById('maybe');
 
         getAll();
         async function getAll() {
@@ -47,7 +44,7 @@
                 }
             }
             for(let tag of ['yes', 'no', 'maybe']) {
-                console.log(tag,group[tag])
+                console.log(tag, group[tag].length);
                 document.getElementById(tag).value = group[tag].length;
             }
         }
