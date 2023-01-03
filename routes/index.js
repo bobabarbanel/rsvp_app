@@ -30,6 +30,25 @@ router.get("/api/all", function(req, res, next) {
 			res.json(cards);
 		});
 });
+router.get("/api/count", function(req, res, next) {
+	collection
+		.find()
+		.sort({ lastName: 1, firstName: 1 })
+		.toArray()
+		.then(cards => {
+			const group = { yes: [], no: [], maybe: [] };
+
+			for (let p of cards) {
+				if (p.email !== "?") {
+					group[p.response === "" ? "maybe" : p.response].push(p);
+				}
+			}
+			group['count']['yes'] = group['yes'].length;
+			group['count']['no'] = group['no'].length;
+			group['count']['maybe'] = group['maybe'].length;
+			res.json(group);
+		});
+});
 
 router.get("/api/getRsvp", function(req, res, next) {
 	const _id = new ObjectId(req.query.id);

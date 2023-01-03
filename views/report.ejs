@@ -33,21 +33,15 @@
 
         getAll();
         async function getAll() {
-            const rawResponse = await fetch('/api/all');
+            const rawResponse = await fetch('/api/count');
             const content = await rawResponse.json();
+            console.log(content);
 
-            const group = { yes: [], no: [], maybe: [] };
-
-            for (let p of content) {
-                if (p.email !== '?') {
-                    group[p.response === '' ? 'maybe' : p.response].push(p)
-                }
-            }
-            for(let tag of ['yes', 'no', 'maybe']) {
-                console.log(tag, group[tag].length);
-                document.getElementById(tag).value = group[tag].length;
-                console.log(tag, document.getElementById(tag).value);
-            }
+            // for(let tag of ['yes', 'no', 'maybe']) {
+            //     console.log(tag, group[tag].length);
+            //     document.getElementById(tag).value = group[tag].length;
+            //     console.log(tag, document.getElementById(tag).value);
+            // }
         }
     </script>
 </body>
