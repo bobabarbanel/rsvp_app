@@ -4,8 +4,6 @@ var path = require('path');
 // var logger = require('morgan');
 var cors = require("cors");
 
-
-
 var indexRouter = require('./routes/index');
 
 var app = express();
