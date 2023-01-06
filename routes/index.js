@@ -2,8 +2,10 @@ var express = require("express");
 var router = express.Router();
 require("dotenv").config();
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-const uri = `mongodb+srv://rabarbanel:${process.env
-	.MONGO_PASS}@mcollections.dor0p.mongodb.net/?retryWrites=true&w=majority`;
+const uri =
+	`mongodb+srv://rabarbanel:${process.env.MONGO_PASS}` +
+	`@mcollections.dor0p.mongodb.net/` +
+	`?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
