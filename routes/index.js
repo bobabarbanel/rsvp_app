@@ -15,6 +15,24 @@ let collection;
 client.connect(async () => {
 	collection = client.db("party").collection("rsvp");
 });
+router.get("/contribute/:id/:amount/:from", function(req, res, next) {
+	let { id, amount, from } = req.params;
+	collection
+		.updateOne(
+			{ _id: new ObjectId(id) },
+			{
+				$set: { contribution: { amount: +amount, from } }
+			}
+		)
+		.then(
+			result => {
+				return res.status(200).json({success: result});
+			},
+			err => {
+				return res.status(500).json(err);
+			}
+		);
+});
 /* GET home page. */
 router.get("/report", function(req, res, next) {
 	collection
